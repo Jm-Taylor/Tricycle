@@ -2,7 +2,7 @@
 
 This is the code that is used on the Tricycle robot created from the [Studica FTC Starter Kit](https://www.studica.ca/en/ftc-starter-kit-2021).
 
-This code was created using the 7.0 SDK in Android Studio.
+This code was created using the FTC 7.0 SDK in Android Studio.
 
 ## Android Studio Setup
 
@@ -14,13 +14,15 @@ OpenCV needs to be installed as well the 7 step instructions [here](https://gith
 
 The navX library also needs to be installed. The instructions on the KauaiLabs website are a bit dated and no longer work. But following below will allow you to add the library.
 
-1. Under Gradle Scripts find `build.dependencies.gradle` and open it
+1. Install the navX tools [here](https://www.kauailabs.com/public_files/navx-micro/navx-micro.zip)
 
-2. Look for the flatDir{} section and add `dirs 'libs', 'C:\\Users\\james\\navx-micro\\android\\libs'` but with your correct directory. AKA replace james with your username.
+2. Under Gradle Scripts find `build.dependencies.gradle` and open it
 
-3. In the same file is the dependencies{} section. Add `compile (name:'navx_ftc-release', ext:'aar')` at the bottom.
+3. Look for the flatDir{} section and add `dirs 'libs', 'C:\\Users\\james\\navx-micro\\android\\libs'` but with your correct directory. AKA replace james with your username.
 
-4. Hit the sync now on the Gradle message or hit the elephant icon in the top right to sync the Gradle files.
+4. In the same file is the dependencies{} section. Add `compile (name:'navx_ftc-release', ext:'aar')` at the bottom.
+
+5. Hit the sync now on the Gradle message or hit the elephant icon in the top right to sync the Gradle files.
 
 ## Adding the code
 
