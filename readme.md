@@ -91,11 +91,17 @@ The `BARCODE_X_TOP_LEFT` points refers to the `(X, Y)` point of the top left of 
 The X and Y values are the pixel locations on the image. In the example the code is using a `640 x 480` image taken from the camera. 
 
 (0,0) ------------- (640,0)
+
 x                      x
+
 x                      x
+
 x                      x
+
 x                      x
+
 x                      x
+
 (0,480)------------ (640,480)
 
 The locations of each pixel is demonstrated above with the origin (0,0) at the top left. 
