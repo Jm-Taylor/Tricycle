@@ -65,3 +65,70 @@ The navX library also needs to be installed. The instructions on the KauaiLabs w
 - Dpad UP will move the elevator up
 
 - Dpad DOWN will move the elevator down
+
+# Autonomous 
+
+The Autonomous code uses OpenCV to easily determine which of the three barcodes has a duck on it. 
+
+## Calibrating the Pipeline
+
+The bulk of the vision is done inside a pipeline. The pipeline is essentially a vision script that allows the processing of an image and then returning that image when its done. 
+
+There are only a few sections that need to be adjusted for ROI boxes and a threshold value.
+
+```java
+   static final Point BARCODE_1_TOP_LEFT = new Point(10, 275);
+   static final Point BARCODE_2_TOP_LEFT = new Point(300, 275);
+   static final Point BARCODE_3_TOP_LEFT = new Point(539, 250);
+
+   static final int BARCODE_WIDTH = 100;
+   static final int BARCODE_HEIGHT = 75;
+
+   final int OBJECT_THERE_THRESHOLD = 125;
+```
+The `BARCODE_X_TOP_LEFT` points refers to the `(X, Y)` point of the top left of a rectangle. This is where you set the location of your ROI boxes. 
+
+The X and Y values are the pixel locations on the image. In the example the code is using a `640 x 480` image taken from the camera. 
+
+(0,0) ------------- (640,0)
+-                       -
+-                       -
+-                       -
+-                       - 
+-                       -
+-                       -
+-                       -
+(0,480)------------ (640,480)
+
+The locations of each pixel is demonstrated above with the origin (0,0) at the top left. 
+
+Next value to calibrate would be the width and the height of the ROI rectangle for each barcode. The example creates a `100 x 75` pixel ROI rectangle, however, you may wish to change this based on the location of your camera or to improve accuracy. The smaller the ROI rectangle is the more accurate the averaging calculation done in the code is. 
+
+The last value to be calibrated is the `OBJECT_THERE_THRESHOLD`. This can only be done through testing on the court. It is very easy to do. 
+
+1. Put the Robot on the Court with no ducks placed. 
+
+2. Run the code and see what the three outputs are. (They should be pretty similar) In my testing I found the values to be around `119` when there was no duck.
+
+3. Record the values with no Duck
+
+4. Place a duck on the barcode and run the code again. The numbers should now go upwards. In my testing I found the values were above `130`.
+
+5. Record the values with the Duck.
+
+6. Now to get the value to put for the `OBJECT_THERE_THRESHOLD`, we will take a number inbetween the two values we just observed. For example `((130 - 119) / 2) + 119 = 124.5` So our `OBJECT_THERE_THRESHOLD` should be `124.5` but we will round up to `125`.
+
+## Results
+
+For the duck on the left
+
+<img src='img/Camera Pos 1.png' width='50%'><img src='img/Result 1.png' width='50%'><br/>
+
+For the middle duck
+
+<img src='img/Camera Pos 2.png' width='50%'><img src='img/Result 2.png' width='50%'><br/>
+
+For the duck on the right
+
+<img src='img/Camera Pos 3.png' width='50%'><img src='img/Result 3.png' width='50%'><br/>
+
