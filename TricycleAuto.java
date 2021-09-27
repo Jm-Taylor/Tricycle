@@ -1,8 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -17,6 +20,8 @@ public class TricycleAuto extends OpMode
     BarcodePipeline visionPipeline;
     WebcamName webcamName;
     OpenCvCamera camera;
+    FtcDashboard dashboard;
+    TelemetryPacket packet;
 
     /**
      * Code that will run when init button is pressed
@@ -24,6 +29,8 @@ public class TricycleAuto extends OpMode
     @Override
     public void init()
     {
+        dashboard = FtcDashboard.getInstance();
+        packet = new TelemetryPacket();
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcamName = hardwareMap.get(WebcamName.class, "camera"); // Make sure this matches the config you created
         camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName, cameraMonitorViewId);
@@ -41,6 +48,8 @@ public class TricycleAuto extends OpMode
                 camera.stopStreaming();
             }
         });
+
+        dashboard.startCameraStream(camera, 0);
     }
 
     /**
@@ -67,9 +76,15 @@ public class TricycleAuto extends OpMode
     @Override
     public void loop()
     {
-        telemetry.addData("Raw:", "{%d}, {%d}, {%d}",visionPipeline.bar1, visionPipeline.bar2, visionPipeline.bar3);
-        telemetry.addData("Position", visionPipeline.position);
-        telemetry.update();
+        //telemetry.addData("Raw:", "{%d}, {%d}, {%d}",visionPipeline.bar1, visionPipeline.bar2, visionPipeline.bar3);
+        //telemetry.addData("Position", visionPipeline.position);
+        //telemetry.update();
+
+        packet.put("Barcode 1:", visionPipeline.bar1);
+        packet.put("Barcode 2:", visionPipeline.bar2);
+        packet.put("Barcode 3:", visionPipeline.bar3);
+        packet.put("Barcode Position:", visionPipeline.position);
+        dashboard.sendTelemetryPacket(packet);
 
         sleep(50); // Not really needed but a good idea as there is no other code running.
     }

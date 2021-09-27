@@ -125,3 +125,31 @@ For the duck on the right
 
 <img src='img/Camera Pos 3.png' width='50%'><img src='img/Result 3.png' width='50%'><br/>
 
+# FTC Dashboard 
+
+A web app made by [acmerobotics](https://github.com/acmerobotics) that allows for easier monitoring of FTC robots during operations. 
+
+The most up to date information on the FTC Dashboard can be found on it's [github](https://github.com/acmerobotics/ftc-dashboard)
+
+## Installing the Dashboard
+
+In `build.dependencies.gradle` add the following in the correct sections:
+
+```gradle
+
+repositories{
+   maven { url = 'https://maven.brott.dev/' }
+}
+
+dependencies {
+   implementation 'com.acmerobotics.dashboard:dashboard:0.4.3'
+}
+```
+
+Run a Gradle Sync to download and ensure that everything is working. 
+
+## Testing the Dashboard
+
+To test the dashboard connect to `192.168.43.1:8080/dash`. The dashboard will then be displayed in your browser window. An example showing the Autonomous is below. 
+
+<img src='img/FTC Dashboard.png'>
